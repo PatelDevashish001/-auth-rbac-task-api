@@ -56,7 +56,7 @@ Make sure your URI is set in `MONGODB_URI`.
 ## Environment Variables
 ```env
 PORT=5000
-MONGODB_URI=mongodb://127.0.0.1:27017/backend_intern_assignment
+MONGODB_URI=mongodb://127.0.0.1:27017/rbac
 JWT_SECRET=replace_with_strong_secret
 JWT_EXPIRES_IN=1h
 NODE_ENV=development
