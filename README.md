@@ -79,3 +79,5 @@ The app serves:
 - API base: `http://localhost:5000/api/v1`
 - Frontend: `http://localhost:5000/`
 - Swagger docs: `http://localhost:5000/api-docs`
+- RBAC is enforced at middleware level on backend.
+Frontend conditionally renders admin controls based on role, but authorization is strictly server-validated.
