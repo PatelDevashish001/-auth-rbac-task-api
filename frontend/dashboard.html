@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Intern Assignment</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="row">
+        <h1>Tasks Dashboard</h1>
+        <button id="logout" type="button" class="secondary">Logout</button>
+      </div>
+
+      <p id="user-info" class="subtext"></p>
+      <section id="message" class="message" role="status" aria-live="polite"></section>
+
+      <form id="task-form" class="card" novalidate>
+        <h2>Create Task</h2>
+        <label>
+          Title
+          <input type="text" name="title" required maxlength="200" />
+        </label>
+        <label>
+          Description
+          <textarea name="description" maxlength="2000" rows="3"></textarea>
+        </label>
+        <button type="submit">Create</button>
+      </form>
+
+      <section class="card">
+        <div class="row">
+          <h2>Your Tasks</h2>
+          <button id="refresh-tasks" class="secondary" type="button">Refresh</button>
+        </div>
+        <ul id="task-list" class="task-list"></ul>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

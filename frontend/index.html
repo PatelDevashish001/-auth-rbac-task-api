@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth | Intern Assignment</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Task API Auth</h1>
+      <p class="subtext">Register or login to continue.</p>
+
+      <div class="tabs">
+        <button id="show-login" class="tab-btn active" type="button">Login</button>
+        <button id="show-register" class="tab-btn" type="button">Register</button>
+      </div>
+
+      <section id="message" class="message" role="status" aria-live="polite"></section>
+
+      <form id="login-form" class="card" novalidate>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Password
+          <input type="password" name="password" required minlength="6" />
+        </label>
+        <button type="submit">Login</button>
+      </form>
+
+      <form id="register-form" class="card hidden" novalidate>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Password
+          <input type="password" name="password" required minlength="6" />
+        </label>
+        <button type="submit">Register</button>
+      </form>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

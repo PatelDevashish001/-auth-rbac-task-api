@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: backend-developer-intern-assignment
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRES_IN
+        value: 1h
+      - key: ENABLE_SWAGGER
+        value: true
+      - key: API_BASE_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false

@@ -1,0 +1,178 @@
+:root {
+  --bg: #f7f7fb;
+  --card: #ffffff;
+  --text: #1d2433;
+  --muted: #5f6a7d;
+  --line: #dce1ea;
+  --primary: #1f6feb;
+  --danger: #c53b3b;
+  --success: #1e8e3e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(180deg, #f6f8ff 0%, #eef3f9 100%);
+  color: var(--text);
+}
+
+.container {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.1rem;
+}
+
+.subtext {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  font-size: 0.95rem;
+  padding: 10px;
+}
+
+button {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button.secondary {
+  background: #32445f;
+  width: auto;
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  background: #cfd7e6;
+  color: #12213b;
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.message {
+  min-height: 22px;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.hidden {
+  display: none;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.task-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.task-title {
+  margin: 0 0 6px;
+}
+
+.task-meta {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.task-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.task-actions button {
+  width: auto;
+}
+
+@media (max-width: 600px) {
+  .container {
+    margin: 20px auto;
+  }
+
+  .row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
