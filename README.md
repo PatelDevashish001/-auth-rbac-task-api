@@ -1,4 +1,4 @@
-# Backend Developer Intern Assignment
+# # Secure Task Management API (JWT + Role-Based Access)
 
 ## Project Overview
 This project provides a production-style REST API using Node.js, Express, MongoDB, and Mongoose with:
