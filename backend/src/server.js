@@ -5,6 +5,8 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = require('./app');
 const connectDB = require('./config/db');
+const { ensureDefaultAdminUser } = require('./config/defaultAdmin');
+const logger = require('./utils/logger');
 
 const PORT = process.env.PORT || 5000;
 const REQUIRED_ENV_VARS = ['MONGODB_URI', 'JWT_SECRET'];
@@ -18,12 +20,18 @@ const startServer = async () => {
     }
 
     await connectDB();
+    await ensureDefaultAdminUser();
 
     server = app.listen(PORT, () => {
-      console.info(`Server running on http://localhost:${PORT}`);
+      logger.info('Server started', {
+        port: Number(PORT),
+        nodeEnv: process.env.NODE_ENV || 'development'
+      });
     });
   } catch (error) {
-    console.error('Failed to start server:', error.message);
+    logger.error('Failed to start server', {
+      errorMessage: error.message
+    });
     process.exit(1);
   }
 };
@@ -31,14 +39,14 @@ const startServer = async () => {
 startServer();
 
 const shutdown = (signal) => {
-  console.info(`${signal} received. Closing HTTP server.`);
+  logger.info('Shutdown signal received', { signal });
 
   if (!server) {
     process.exit(0);
   }
 
   server.close(() => {
-    console.info('HTTP server closed.');
+    logger.info('HTTP server closed');
     process.exit(0);
   });
 };

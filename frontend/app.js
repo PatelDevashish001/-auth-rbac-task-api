@@ -62,6 +62,24 @@
     showLoginBtn.addEventListener('click', () => toggleForm('login'));
     showRegisterBtn.addEventListener('click', () => toggleForm('register'));
 
+    const loginWithEndpoint = async (payload, endpoint = '/api/v1/auth/login') => {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        setMessage(await getApiError(response), 'error');
+        return;
+      }
+
+      const body = await response.json();
+      const { token, user } = body.data;
+      setAuthForNextPage(token, user);
+      window.location.href = '/dashboard';
+    };
+
     registerForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(registerForm);
@@ -101,21 +119,7 @@
       };
 
       try {
-        const response = await fetch('/api/v1/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-          setMessage(await getApiError(response), 'error');
-          return;
-        }
-
-        const body = await response.json();
-        const { token, user } = body.data;
-        setAuthForNextPage(token, user);
-        window.location.href = '/dashboard';
+        await loginWithEndpoint(payload, '/api/v1/auth/login');
       } catch (error) {
         setMessage('Network error while logging in', 'error');
       }

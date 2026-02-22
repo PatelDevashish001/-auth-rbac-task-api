@@ -1,6 +1,35 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const buildAuthResponse = (user, message = 'Login successful') => {
+  const expiresIn = process.env.JWT_EXPIRES_IN || '1h';
+  const token = jwt.sign(
+    {
+      role: user.role
+    },
+    process.env.JWT_SECRET,
+    {
+      subject: user._id.toString(),
+      expiresIn
+    }
+  );
+
+  return {
+    success: true,
+    message,
+    data: {
+      token,
+      expiresIn,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt
+      }
+    }
+  };
+};
+
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -52,32 +81,33 @@ const login = async (req, res, next) => {
       });
     }
 
-    const expiresIn = process.env.JWT_EXPIRES_IN || '1h';
-    const token = jwt.sign(
-      {
-        role: user.role
-      },
-      process.env.JWT_SECRET,
-      {
-        subject: user._id.toString(),
-        expiresIn
-      }
-    );
+    return res.status(200).json(buildAuthResponse(user));
+  } catch (error) {
+    return next(error);
+  }
+};
 
-    return res.status(200).json({
-      success: true,
-      message: 'Login successful',
-      data: {
-        token,
-        expiresIn,
-        user: {
-          id: user._id,
-          email: user.email,
-          role: user.role,
-          createdAt: user.createdAt
-        }
-      }
-    });
+const adminLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email, role: 'ADMIN' }).select('+password');
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid admin credentials'
+      });
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid admin credentials'
+      });
+    }
+
+    return res.status(200).json(buildAuthResponse(user, 'Admin login successful'));
   } catch (error) {
     return next(error);
   }
@@ -85,5 +115,6 @@ const login = async (req, res, next) => {
 
 module.exports = {
   register,
-  login
+  login,
+  adminLogin
 };

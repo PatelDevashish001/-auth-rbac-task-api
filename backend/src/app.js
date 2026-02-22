@@ -7,6 +7,7 @@ const swaggerSpec = require('./config/swagger');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const requestLogger = require('./middlewares/requestLogger');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
@@ -17,7 +18,12 @@ const allowedOrigins = (process.env.CORS_ORIGIN || '')
 
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(
+  helmet({
+    // Keeps Swagger UI functional without custom CSP tuning.
+    contentSecurityPolicy: false
+  })
+);
 app.use(
   cors({
     origin(origin, callback) {
@@ -44,6 +50,7 @@ app.use(
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
+app.use(requestLogger);
 
 const frontendPath = path.resolve(__dirname, '../../frontend');
 app.use(express.static(frontendPath));
