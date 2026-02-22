@@ -122,6 +122,51 @@
     });
   };
 
+  const renderAdminLoginPage = () => {
+    const adminLoginForm = document.getElementById('admin-login-form');
+    const adminMessageEl = document.getElementById('admin-message');
+
+    if (!adminLoginForm || !adminMessageEl) {
+      return;
+    }
+
+    const setAdminMessage = (text, type = '') => {
+      adminMessageEl.textContent = text || '';
+      adminMessageEl.className = `message ${type}`.trim();
+    };
+
+    adminLoginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(adminLoginForm);
+      const payload = {
+        email: String(formData.get('email') || '').trim(),
+        password: String(formData.get('password') || '')
+      };
+
+      try {
+        const response = await fetch('/api/v1/auth/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorMessage = await getApiError(response);
+          setAdminMessage(errorMessage, 'error');
+          return;
+        }
+
+        const body = await response.json();
+        const { token, user } = body.data;
+        setAuthForNextPage(token, user);
+        window.location.href = '/dashboard';
+      } catch (error) {
+        setAdminMessage('Network error while logging in as admin', 'error');
+      }
+    });
+  };
+
   const renderDashboardPage = () => {
     const taskForm = document.getElementById('task-form');
     const taskList = document.getElementById('task-list');
@@ -335,5 +380,6 @@
       .replaceAll("'", '&#39;');
 
   renderAuthPage();
+  renderAdminLoginPage();
   renderDashboardPage();
 })();

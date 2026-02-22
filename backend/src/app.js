@@ -59,6 +59,10 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(frontendPath, 'dashboard.html'));
 });
 
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'admin.html'));
+});
+
 if (process.env.ENABLE_SWAGGER !== 'false') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
