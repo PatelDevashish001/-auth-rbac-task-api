@@ -1,11 +1,7 @@
 const express = require('express');
-const { register, login, adminLogin } = require('../controllers/authController');
+const { register, login } = require('../controllers/authController');
 const validateRequest = require('../middlewares/validateRequest');
-const {
-  registerValidator,
-  loginValidator,
-  adminLoginValidator
-} = require('../validators/authValidators');
+const { registerValidator, loginValidator } = require('../validators/authValidators');
 
 const router = express.Router();
 
@@ -81,38 +77,5 @@ router.post('/register', registerValidator, validateRequest, register);
  *         description: Invalid credentials
  */
 router.post('/login', loginValidator, validateRequest, login);
-
-/**
- * @swagger
- * /api/v1/auth/admin/login:
- *   post:
- *     summary: Login as admin user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/LoginRequest'
- *     responses:
- *       200:
- *         description: Admin login successful
- *         content:
- *           application/json:
- *             example:
- *               success: true
- *               message: Admin login successful
- *               data:
- *                 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
- *                 expiresIn: 1h
- *                 user:
- *                   id: 65f1a9ab1234abcd5678ef90
- *                   email: admin@example.com
- *                   role: ADMIN
- *                   createdAt: 2026-01-01T10:00:00.000Z
- *       401:
- *         description: Invalid admin credentials
- */
-router.post('/admin/login', adminLoginValidator, validateRequest, adminLogin);
 
 module.exports = router;

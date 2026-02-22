@@ -26,10 +26,7 @@ const loginValidator = [
     .withMessage('Password is required')
 ];
 
-const adminLoginValidator = loginValidator;
-
 module.exports = {
   registerValidator,
-  loginValidator,
-  adminLoginValidator
+  loginValidator
 };

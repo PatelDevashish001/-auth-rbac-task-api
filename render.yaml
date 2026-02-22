@@ -13,10 +13,6 @@ services:
         value: 1h
       - key: ENABLE_SWAGGER
         value: true
-      - key: LOG_LEVEL
-        value: info
-      - key: LOG_HEALTHCHECKS
-        value: false
       - key: API_BASE_URL
         sync: false
       - key: MONGODB_URI
@@ -25,9 +21,3 @@ services:
         sync: false
       - key: CORS_ORIGIN
         sync: false
-      - key: DEFAULT_ADMIN_EMAIL
-        sync: false
-      - key: DEFAULT_ADMIN_PASSWORD
-        sync: false
-      - key: SEED_DEFAULT_ADMIN
-        value: false

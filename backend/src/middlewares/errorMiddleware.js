@@ -1,5 +1,3 @@
-const logger = require('../utils/logger');
-
 const notFoundHandler = (req, res) => {
   res.status(404).json({
     success: false,
@@ -24,16 +22,6 @@ const errorHandler = (err, req, res, next) => {
   if (statusCode === 500 && process.env.NODE_ENV === 'production') {
     message = 'Internal server error';
   }
-
-  logger.error('Request failed', {
-    requestId: req.requestId || null,
-    method: req.method,
-    path: req.originalUrl,
-    statusCode,
-    errorName: err.name || 'Error',
-    errorMessage: err.message || 'Unknown error',
-    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
-  });
 
   res.status(statusCode).json({
     success: false,
